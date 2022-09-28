@@ -2,6 +2,13 @@
 __pycache__/
 *.py[cod]
 *$py.class
+# gnore material luciano
+Include/
+Lib/
+Scripts/
+pyvenv.cfg
+.idea
+.vscode
 
 # C extensions
 *.so
