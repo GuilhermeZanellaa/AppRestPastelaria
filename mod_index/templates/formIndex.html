@@ -3,12 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>INDEX</title>
+    <title>HOME</title>
 </head>
 
 <body>
-    <h1>Rota da página de INDEX da nossa WEB APP</h1>
-    <h1>Uso de render_template</h1>
+    <h1>HOME</h1>
+    <ul>
+        <li><a href="{{ url_for('index.formIndex') }}">Home</a></li>
+        <li><a href="{{ url_for('funcionario.formListaFuncionario') }}">Funcionário</a></li>
+        <li><a href="{{ url_for('cliente.formListaCliente') }}">Cliente</a></li>
+        <li><a href="{{ url_for('produto.formListaProduto') }}">Produto</a></li>
+    </ul>
 </body>
 
 </html>
