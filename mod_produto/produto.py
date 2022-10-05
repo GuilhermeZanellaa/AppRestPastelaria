@@ -4,6 +4,6 @@ bp_produto = Blueprint(
 
 
 @bp_produto.route('/')
-def formListaFuncionario():
+def formListaProduto():
 
     return render_template('formListaProduto.html'), 200

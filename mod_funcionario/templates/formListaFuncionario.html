@@ -7,8 +7,17 @@
 </head>
 
 <body>
-    <h1>Rota da página de FUNCIONARIO da nossa WEB APP</h1>
-    <h1>Uso de render_template</h1>
+    {% extends "base.html" %}
+
+    {% block title %}Funcionário{% endblock %}
+
+    {% block content %}
+    <h1>Funcionário</h1>
+    <p class="important">Seja bem vindo!</p>
+    <ul>
+        <li><a href="{{ url_for('index.formListaIndex') }}">Home</a></li>
+    </ul>
+    {% endblock %}
 </body>
 
 </html>

@@ -4,6 +4,6 @@ bp_index = Blueprint(
 
 
 @bp_index.route('/')
-def formListaFuncionario():
+def formListaIndex():
 
     return render_template('formIndex.html'), 200
