@@ -10,19 +10,19 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-5.2.2-dist/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome-free-6.2.0-web/css/all.min.css') }}">
 
-  <title>{% block title %} {% endblock %} - AbcBolinhas</title>
+  <title>{% block title %} {% endblock %} - Pastelaria do Zé</title>
 
   {% block style %} {% endblock %}
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
 
     :root {
-      --btn-primary-claro: #bd9528;
-      --btn-primary-outline-escuro: #614b10;
+      --btn-primary-claro: #58d767;
+      --btn-primary-outline-escuro: #04bf1a;;
     }
 
     a {
-      color: rgb(168, 203, 233);
+      color: rgb(62, 139, 207);
       text-decoration: none;
     }
 
@@ -31,7 +31,18 @@
     }
 
     a:visited {
-      color: rgb(138, 164, 187);
+      color: rgb(62, 139, 207);
+    }
+
+    footer{
+      position: absolute;
+      bottom: 0;
+      background-color: #1c1e20;
+      color: rgb(62, 139, 207);
+      width: 50%;
+      height: 50px;
+      text-align: end;
+      line-height: 50%;
     }
 
     body {
@@ -41,11 +52,11 @@
     }
 
     .important {
-      color: rgb(221, 177, 96);
+      color: rgb(62, 139, 207);
     }
 
     .destacar-titulo {
-      color: rgb(151, 104, 43);
+      color: rgb(62, 139, 207);
     }
 
     .bg-form {
@@ -77,6 +88,8 @@
       background-color: var(--btn-primary-claro) !important;
       color: var(--branco) !important;
     }
+
+    
   </style>
 </head>
 
@@ -85,15 +98,10 @@
   <div class="container">
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href=" {{ url_for('index.index') }}">Pastelaria do Zé</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{{ url_for('index.index') }}">Home</a>
+              <a class="nav-link active" aria-current="page" href="{{ url_for('index.index') }}">Inicio</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page"
@@ -109,9 +117,6 @@
                 href="{{ url_for('produto.formListaProduto') }}">Produtos</a>
             </li>
           </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
         </div>
       </div>
@@ -124,7 +129,7 @@
   </div>
 
   {% block footer %}
-  
+
   {% endblock %}
 
   {% block js %} {% endblock %}
