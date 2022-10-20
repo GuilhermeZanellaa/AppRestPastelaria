@@ -1,19 +1,11 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>HOME</title>
-</head>
+{% block title %} Inicio {% endblock %}
 
-<body>
-    <h1>HOME</h1>
-    <ul>
-        <li><a href="{{ url_for('index.formListaIndex') }}">Home</a></li>
-        <li><a href="{{ url_for('funcionario.formListaFuncionario') }}">Funcionário</a></li>
-        <li><a href="{{ url_for('cliente.formListaCliente') }}">Cliente</a></li>
-        <li><a href="{{ url_for('produto.formListaProduto') }}">Produto</a></li>
-    </ul>
-</body>
+{% block content %}
+<h1>Inicio</h1>
+<p class="important">Pastelaria do Zé</p>
+<p>Utilize a barra superior para navegar pelo nosso site</p>
 
-</html>
+<footer>Desenvolvido por Guilherme Zanella</footer>
+{% endblock %}
