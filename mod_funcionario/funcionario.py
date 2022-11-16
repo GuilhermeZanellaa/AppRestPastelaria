@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template
+from mod_funcoes import funcoes
 
 bp_funcionario = Blueprint(
     'funcionario', __name__, url_prefix="/funcionario", template_folder='templates')
