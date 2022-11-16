@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template
+from mod_funcoes import funcoes
 
 bp_cliente = Blueprint(
     'cliente', __name__, url_prefix="/cliente", template_folder='templates')
