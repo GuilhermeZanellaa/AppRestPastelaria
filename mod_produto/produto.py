@@ -36,13 +36,11 @@ def insert():
         nome = request.form['nome']
         descricao = request.form['descricao']
         valor_unitario = request.form['valor_unitario']
-        # foto = "data:" + request.files['foto'].content_type + ";base64," + str(
-        #    base64.b64encode(request.files['foto'].read()), "utf-8")
+
 
         payload = {
             'nome': nome,
             'descricao': descricao,
-            # 'foto': foto,
             'valor_unitario': valor_unitario
         }
 
