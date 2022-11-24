@@ -1,44 +1,50 @@
-{% extends "base.html" %}
-
-{% block title %}Funcionários{% endblock %}
-
-{% block content %}
-<form class="d-flex justify-content-between mb-3" action="{{ url_for('funcionario.formFuncionario') }}" , method="GET">
-    <h1 class="fw-bold destacar-titulo">Funcionários</h1>
-    <button class="btn btn-outline-primary">Novo funcionário</button>
+{% extends "base.html" %} {% block title %}Funcionários{% endblock %} {% block
+content %}
+<form action="{{ url_for('funcionario.formFuncionario') }}" method="POST">
+  <h1><i class="fas fa-list"></i> Lista de funcionários</h1>
+  <button type="submit" name="formNovo" class="btn btn-outline-light my-3">
+    <i class="fas fa-add"></i> Cadastrar novo funcionário
+  </button>
 </form>
-
-<table class="table table-dark table-striped table-hover table-borderless">
-    <thead class="text-center">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nome</th>
-            <th scope="col">Matrícula</th>
-            <th scope="col">CPF</th>
-            <th scope="col">Telefone</th>
-            <th scope="col">Grupo</th>
-            <th scope="col">Senha</th>
-            <th scope="col">Ações</th>
-        </tr>
-    </thead>
-    <tbody class="text-center">
-        <tr>
-            <th scope="row">...</th>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td class="d-grid d-md-block">
-                <button class="btn btn-sm btn-primary me-0 md-md-1 mb-1 mb-md-auto">
-                    <i class="fas fa-edit"></i>
-                </button>
-                <button class="btn btn-sm btn-outline-danger me-0 md-md-1 mb-1 mb-md-auto">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </td>
-        </tr>
-    </tbody>
+<table class="table table table-striped">
+  <thead class="thead-dark bg-dark text-white">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col">CPF</th>
+      <th scope="col">Matrícula</th>
+      <th scope="col">Telefone</th>
+      <th scope="col">Grupo</th>
+      <th scope="col">Ação</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if result %} {% for row in result[0] %}
+    <tr>
+      <th scope="row">{{ row['id_funcionario'] }}</th>
+      <td>{{ row['nome'] }}</td>
+      <td>{{ row['cpf'] }}</td>
+      <td>{{ row['matricula'] }}</td>
+      <td>{{ row['telefone'] }}</td>
+      <td>{{ row['grupo'] }}</td>
+      <td class="d-flex flex-row">
+        <form action="{{ url_for('funcionario.formEditFuncionario') }}" method="POST"
+          name="formEdit{{ row['id_funcionario'] }}">
+          <input type="hidden" name="id" value="{{ row['id_funcionario'] }}" />
+          <button type="submit" name="formEditFuncionario" class="btn">
+            <i class="fas fa-edit"></i>
+          </button>
+        </form>
+        <form action="{{ url_for('funcionario.delete') }}" method="POST" name="formEdit{{ row['id_funcionario'] }}">
+          <input type="hidden" name="id_funcionario" value="{{ row['id_funcionario'] }}" />
+          <button type="submit" name="delete" class="btn">
+            <i class="fas fa-trash"></i>
+          </button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %} {% endif %}
+  </tbody>
 </table>
+
 {% endblock %}

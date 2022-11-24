@@ -1,55 +1,92 @@
-{% extends "base.html" %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+<script
+  src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"
+  type="text/javascript"
+></script>
+<script
+  src="https://plentz.github.io/jquery-maskmoney/javascripts/jquery.maskMoney.min.js"
+  type="text/javascript"
+></script>
 
-{% block title %}Produto{% endblock %}
-
+{% extends "base.html" %} {% block title %}Produto{% endblock %}
+{# ajusta as variáveis conforme novo ou edit #}
+{% set id = result[0].id_produto if result else '0' %}
+{% set nome = result[0].nome if result else '' %}
+{% set descricao = result[0].descricao if result else '' %}
+{% set foto = result[0].foto if result else '' %}
+{% set valor = result[0].valor if result else '' %}
 {% block content %}
 
-<div class="d-flex flex-column align-items-center">
+<form
+  class="row g-3 bg-dark mx-5 text-white p-3 mt-5 rounded shadow-lg"
+  name="{{ 'formEditar' if result else 'formAdicionar' }}"  
+  id="{{ 'formEditar' if result else 'formAdicionar' }}"
+  action="{{ url_for('produto.edit') if result else url_for('produto.insert') }}"
+  method="POST"
+>
+  <h1><i class="fa fa-user-plus"></i> Cadastrar novo produto</h1>
+  <hr />
+  <div class="col-md-6">
+    <input type="text" name="id" id="id" value="{{ id }}" hidden>
 
-    <div class="card bg-form w-50">
-        <form name="produto" id="produto" method="POST">
-            <div class="card-header">
-                <h1 class="fw-bold destacar-titulo">Cadastro de Produtos</h1>
-            </div>
+    <label for="nome" class="form-label">Nome do produto</label>
+    <input
+      type="text"
+      class="form-control bg-dark text-white"
+      placeholder="Nome do produto"
+      id="nome"
+      name="nome"
+      value="{{ nome }}"
+    />
+  </div>
+  <div class="col-md-6">
+    <label for="descricao" class="form-label">Descrição</label>
+    <input
+      type="text"
+      class="form-control bg-dark text-white"
+      placeholder="Descrição do produto"
+      id="descricao"
+      name="descricao"
+      value="{{ descricao }}"
 
-            <div class="card-body">
-                <div class="form-group mb-3">
-                    <label class="form-label" for="codigo">Código</label>
-                    <input class="form-control text-bg-dark" type="text" id="codigo" name="codigo" placeholder="Código"
-                        readonly>
-                </div>
+    />
+  </div>
+  <div class="col-md-6">
+    <label for="foto" class="form-label">Foto</label>
+    <input
+      type="file"
+      class="form-control bg-dark text-white"
+      id="foto"
+      accept="image/*"
+      name="foto"
+      value="{{ foto }}"
 
-                <div class="form-group mb-3">
-                    <label class="form-label" for="nome">Nome Produto</label>
-                    <input class="form-control text-bg-dark" type="text" name="nome" id="nome"
-                        placeholder="Nome Produto" maxlength="100" autofocus required>
-                </div>
+    />
+  </div>
+  <div class="col-md-6"></div>
+  <div class="col-md-6">
+    <label for="valor" class="form-label">Valor</label>
+    <input
+      type="text"
+      class="form-control bg-dark text-white"
+      placeholder="4,00"
+      id="valor"
+      name="valor"
+      value="{{ valor }}"
 
-                <div class="form-floating mt-4">
-                    <textarea class="form-control text-bg-dark no-resize" placeholder="Informe a descrição do produto"
-                        id="floatingTextarea" style="height: 100px" maxlength="200" required></textarea>
-                    <label for="floatingTextarea">Descrição do produto</label>
-                </div>
+    />
+  </div>
 
-                <div class="input-group my-3">
-                    <label class="input-group-text text-bg-dark" for="inputGroupFile01">Foto do produto</label>
-                    <input class="form-control text-bg-dark" type="file" id="inputGroupFile01" required>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label class="form-label" for="valor">Valor Produto</label>
-                    <input class="form-control text-bg-dark" type="number" name="valor" id="valor"
-                        placeholder="Valor Produto" max="1000" required>
-                </div>
-
-
-            </div>
-            <div class="card-footer">
-                <button class="btn btn-primary" type='submit' name='salvaUsuarioDB' id='salvaUsuarioDB'><i
-                        class='fas fa-save'></i> Salvar</button>
-            </div>
-        </form>
-    </div>
-</div>
-
+  <div class="col-12 d-flex flex-row-reverse">
+    <button
+      type="submit"
+      class="btn btn-success"
+      name="salvaUsuarioDB"
+      id="salvaUsuarioDB"
+    >
+      <i class="fas fa-save"></i> Cadastrar
+    </button>
+  </div>
+</form>
 {% endblock %}

@@ -1,82 +1,111 @@
-{% extends "base.html" %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 
-{% block title %}Clientes{% endblock %}
+{% extends "base.html" %} {% block title %}Cliente{% endblock %}
+{# ajusta as variáveis conforme novo ou edit #}
+{% set id = result[0].id_cliente if result else '0' %}
+{% set nome = result[0].nome if result else '' %}
+{% set cpf = result[0].cpf if result else '' %}
+{% set telefone = result[0].telefone if result else '' %}
+{% set diaFiado = result[0].dia_fiado if result else '' %}
+{% set compra_fiado = result[0].compra_fiado if result else '' %}{% block
+content %}
+<script type="text/javascript">
+  $("#telefone").mask("(00) 0000-0000");
+  $("#cpf").mask("000.000.000-00");
+</script>
+<form
+  class="row g-3 bg-dark mx-5 text-white p-3 mt-5 rounded shadow-lg fs-5"
+  name="{{ 'formEditar' if result else 'formAdicionar' }}"  
+  id="{{ 'formEditar' if result else 'formAdicionar' }}"
+  action="{{ url_for('cliente.edit') if result else url_for('cliente.insert') }}"
+  method="POST"
+>
+<h1><i class="fa fa-user-plus"></i> Cliente - {{ "%s: %s" % ('Editar Registro', id) if result else 'Novo' }}</h1>
 
-{% block content %}
+  <hr />
+  <div class="col-md-6">
+    <input type="text" name="id" id="id" value="{{ id }}" hidden>
 
-<div class="d-flex flex-column align-items-center">
-
-    <div class="card bg-form w-50">
-        <form name="cliente" id="cliente" method="POST">
-            <div class="card-header">
-                <h1 class="fw-bold destacar-titulo">Cadastro de Clientes</h1>
-            </div>
-
-            <div class="card-body">
-                <div class="form-group mb-3">
-                    <label class="form-label" for="codigo">Código</label>
-                    <input class="form-control text-bg-dark" type="text" id="codigo" name="codigo" placeholder="Código"
-                        readonly>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label class="form-label" for="nome">Nome Funcionário</label>
-                    <input class="form-control text-bg-dark" type="text" name="nome" id="nome"
-                        placeholder="Nome Cliente" maxlength="100" autofocus required>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label class="form-label" for="cpf">CPF</label>
-                    <input class="form-control text-bg-dark" type="text" name="cpf" id="cpf" placeholder="CPF"
-                        maxlength="15" required>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label class="form-label" for="telefone">Telefone</label>
-                    <input class="form-control text-bg-dark" type="tel" name="telefone" id="telefone"
-                        placeholder="Telefone" maxlength="15" required>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label" for="telefone">Compra fiado?</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="compraFiado" id="sim">
-                        <label class="form-check-label" for="sim">
-                            Sim
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="compraFiado" id="nao">
-                        <label class="form-check-label" for="nao">
-                            Não
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label class="mb-2" for="startDate">Data fiado</label>
-                    <input id="startDate" class="form-control  text-bg-dark" type="date" />
-                </div>
-
-                <div class="form-group mb-3">
-                    <label class="form-label" for="senha">Senha</label>
-                    <input class="form-control text-bg-dark" type="password" name="senha" id="senha" placeholder="Senha"
-                        required>
-                </div>
-
-                <div class="form-group mb-3">
-                    <label class="form-label" for="resenha">Confirmar senha</label>
-                    <input class="form-control text-bg-dark" type="password" name="resenha" id="resenha"
-                        placeholder="Senha" required>
-                </div>
-            </div>
-
-            <div class="card-footer">
-                <button class="btn btn-primary" type='submit' name='salvaUsuarioDB' id='salvaUsuarioDB'><i
-                        class='fas fa-save'></i> Salvar</button>
-            </div>
-        </form>
+    <label for="nome" class="form-label">Nome</label>
+    <input
+      type="text"
+      class="form-control bg-dark text-white"
+      placeholder="Nome do cliente"
+      id="nome"
+      name="nome"
+      value="{{ nome }}"
+    />
+  </div>
+  <div class="col-md-6">
+    <label for="cpf" class="form-label">CPF</label>
+    <input
+      type="cpf"
+      class="form-control bg-dark text-white"
+      placeholder="000.000.000-00"
+      id="cpf"
+      name="cpf"
+      value="{{ cpf }}"
+    />
+  </div>
+  <div class="col-md-6">
+    <label for="telefone" class="form-label">Telefone</label>
+    <input
+      type="phone"
+      class="form-control bg-dark text-white"
+      placeholder="(00) 0 0000-0000"
+      id="telefone"
+      name="telefone"
+      value="{{ telefone }}"
+    />
+  </div>
+  <div class="col-md-6"></div>
+  <div class="col-md-12">
+    <label for="compraFiado" class="form-label">Fiado</label>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="compraFiado" name="compraFiado" value="{{ compraFiado }}">
+      <label class="form-check-label" for="compraFiado">Fiado liberado</label>
     </div>
-</div>
+    <br/>
+    <label for="diaFiado" class="form-label">Dia fiado</label><br/>
+    <input
+      class="bg-dark text-white"
+      type="text"
+      id="diaFiado"
+      name="diaFiado"
+      value="{{ diaFiado }}"
+    />
+  </div>
+  <div class="col-md-6">
+    <label for="senha" class="form-label">Senha</label>
+    <input
+      type="password"
+      class="form-control bg-dark text-white"
+      placeholder="Crie sua senha"
+      id="senha"
+      name="senha"
+    />
+  </div>
+  <div class="col-md-6">
+    <label for="reSenha" class="form-label">Repita sua senha</label>
+    <input
+      type="password"
+      class="form-control bg-dark text-white"
+      placeholder="Repita sua senha"
+      id="reSenha"
+      name="resenha"
+    />
+  </div>
 
+  <div class="col-12 d-flex flex-row-reverse">
+    <button
+      type="submit"
+      class="btn btn-success"
+      name="salvaUsuarioDB"
+      id="salvaUsuarioDB"
+    >
+      <i class="fas fa-save"></i> Cadastrar
+    </button>
+  </div>
+</form>
 {% endblock %}

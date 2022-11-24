@@ -18,7 +18,8 @@
 
     :root {
       --btn-primary-claro: #fc6305;
-      --btn-primary-outline-escuro: #fc8135;;
+      --btn-primary-outline-escuro: #fc8135;
+      ;
     }
 
     a {
@@ -34,7 +35,7 @@
       color: rgb(62, 139, 207);
     }
 
-    footer{
+    footer {
       position: absolute;
       bottom: 0;
       background-color: #1c1e20;
@@ -88,8 +89,6 @@
       background-color: var(--btn-primary-claro) !important;
       color: var(--branco) !important;
     }
-
-    
   </style>
 </head>
 
@@ -132,10 +131,57 @@
 
   {% endblock %}
 
-  {% block js %} {% endblock %}
+  {% if request.args.get('msg'): %}
+  <script>
+    Swal.fire({
+      title: 'Sucesso',
+      text: '{{ request.args.get("msg") }}',
+      icon: 'success',
+      confirmButtonText: 'OK'
+    });
+  </script>
+  {% elif msg: %}
+  <script>
+    Swal.fire({
+      title: 'Sucesso',
+      text: '{{ msg }}',
+      icon: 'success',
+      confirmButtonText: 'OK'
+    });
+  </script>
+  {% elif request.args.get('msgErro'): %}
+  <script>
+    Swal.fire({
+      title: 'Erro',
+      text: "{{ request.args.get('msgErro') }}",
+      icon: 'error',
+      confirmButtonText: 'OK'
+    });
+  </script>
+  {% elif msgErro: %}
+  <script>
+    Swal.fire({
+      title: 'Erro',
+      text: '{{ msgErro }}',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    });
+  </script>
+  {% endif %}
 
+  {% block js %}
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='jquery-3.6.1.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='jquery.maskedinput.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='sweetalert2/sweetalert2.all.min.js') }}"></script>
   <script src="{{ url_for('static', filename='bootstrap-5.2.2-dist/js/bootstrap.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='fontawesome-free-6.2.0-web/js/all.js') }}"></script>
+  <script>
+    Swal.fire({
+      title: ' Teste!', text: 'sweetalert2 funcionando!', icon: 'success', confirmButtonText: 'OK'
+    }); </script>
+  {% endblock %}
+
 
 </body>
 
