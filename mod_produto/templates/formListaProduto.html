@@ -1,43 +1,58 @@
-{% extends "base.html" %}
-
-{% block title %}Produtos{% endblock %}
-
-{% block content %}
-<form class="d-flex justify-content-between mb-3" action="{{ url_for('produto.formProduto') }}" , method="GET">
-  <h1 class="fw-bold destacar-titulo">Produtos</h1>
-  <button class="btn btn-outline-primary">Novo Produto</button>
-</form>
-
-<table class="table table-dark table-striped table-hover table-borderless">
-  <thead class="text-center">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Nome</th>
-      <th scope="col">Descrição</th>
-      <th scope="col">Foto</th>
-      <th scope="col">Valor Unitário (R$)</th>
-      <th scope="col">Ações</th>
-    </tr>
-  </thead>
-  <tbody class="text-center">
-    {% if result %}
-    {% for row in result[0] %}
-    <tr>
-      <th scope="row">{{ row['id_produto'] }}</th>
-      <td>{{ row['nome'] }}</td>
-      <td>{{ row['descricao'] }}</td>
-      <td><img src="{{ row['foto'] }}" /></td>
-      <td>{{ row['valor_unitario'] }}</td>
-      <td class="d-grid d-md-block">
-        <button class="btn btn-sm btn-primary me-0 md-md-1 mb-1 mb-md-auto">
-          <i class="bi bi-pencil"></i>
-        </button>
-        <button class="btn btn-sm btn-outline-danger me-0 md-md-1 mb-1 mb-md-auto">
-          <i class="bi bi-trash"></i>
-      </td>
-    </tr>
-    {% endfor %}
-    {% endif %}
-  </tbody>
-</table>
-{% endblock %}
+{% extends "base.html" %} {% block title %}Funcionários{% endblock %} {% block
+  content %}
+  <form action="{{ url_for('produto.formProduto') }}" method="POST">
+    <h1><i class="fas fa-list"></i> Lista de produtos</h1>
+    <button type="submit" name="formNovo" class="btn btn-outline-light my-3">
+      <i class="fas fa-add"></i> Cadastrar novo produtos
+    </button>
+  </form>
+  <table class="table table table-striped">
+    <thead class="thead-light bg-dark text-white">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Produto</th>
+        <th scope="col">Descrição</th>
+        <th scope="col">Foto</th>
+        <th scope="col">Valor</th>
+        <th scope="col">Ação</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if result %} {% for row in result[0] %}
+      <tr>
+        <th scope="row">{{ row['id_produto'] }}</th>
+        <td>{{ row['nome'] }}</td>
+        <td>{{ row['descricao'] }}</td>
+        <td>{{ row['foto'] }}</td>
+        <td>{{ row['valor_unitario'] }}</td>
+        <td class="d-flex flex-row">
+          <form
+            action="{{ url_for('produto.formEditProduto') }}"
+            method="POST"
+            name="formEdit{{ row['id_produto'] }}"
+          >
+            <input type="hidden" name="id" value="{{ row['id_produto'] }}" />
+            <button type="submit" name="formEditProduto" class="btn">
+              <i class="fas fa-edit"></i>
+            </button>
+          </form>
+          <form
+            action="{{ url_for('produto.delete') }}"
+            method="POST"
+            name="formEdit{{ row['id_produto'] }}"
+          >
+            <input
+              type="hidden"
+              name="id_produto"
+              value="{{ row['id_produto'] }}"
+            />
+            <button type="submit" name="delete" class="btn">
+              <i class="fas fa-trash"></i>
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %} {% endif %}
+    </tbody>
+  </table>
+  {% endblock %}
